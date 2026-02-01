@@ -11,3 +11,5 @@ class CategoryAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("id", "category", "title", "desc", "price")
     list_editable = ("category", "title", "desc", "price")
+    search_fields = ("id", "title")
+    list_filter = ("is_available", "created_at", "price")
