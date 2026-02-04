@@ -20,9 +20,9 @@ def lot_list(request, category_slug=None):
     elif sort == 'popular':
         lots = lots.order_by('views')
     elif sort == 'price_low':
-        lots = lots.order_by('-price')
+        lots = lots.order_by('price')
     elif sort == 'price_high':
-        lots = lots.order_by("price")
+        lots = lots.order_by("-price")
     elif sort == 'name':
         lots = lots.order_by("name")
 
@@ -34,3 +34,8 @@ def lot_list(request, category_slug=None):
         "category": category
     })
 
+def lot_detail(request, id):
+    lot = get_object_or_404(Lot, id=id)
+    return render(request, "main/product_detail.html", {
+        "lot": lot
+    })

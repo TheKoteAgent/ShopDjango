@@ -12,7 +12,7 @@ class Category(models.Model):
         return f"{self.title}"
 
     def get_absolute_url(self):
-        return reverse("main:lot_list", args=[self.slug])
+        return reverse("main:lot_list_by_category", args=[self.slug])
 
 class Lot(models.Model):
     title = models.CharField(max_length=100)
@@ -21,8 +21,8 @@ class Lot(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     price = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=50, unique=True)
-    created_at = models.DateField(auto_now_add=True)
-    updated_at = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     is_available = models.BooleanField(default=True)
     views = models.IntegerField(default=0)
     featured = models.BooleanField(default=False)

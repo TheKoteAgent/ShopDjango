@@ -14,7 +14,6 @@
     <title>{% block title %}My E-Shop{% endblock %}</title>
 </head>
 <body class="d-flex flex-column min-vh-100">
-
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
@@ -54,7 +53,23 @@
             </div>
         </nav>
     </header>
+    <nav class="my-4">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+        <span class="text-muted me-2">Categories:</span>
 
+        <a href="{% url 'main:lot_list' %}"
+           class="btn btn-sm rounded-pill {% if not category %}btn-dark{% else %}btn-outline-dark{% endif %}">
+            All Lots
+        </a>
+
+        {% for cat in categories %}
+            <a href="{{ cat.get_absolute_url }}"
+               class="btn btn-sm rounded-pill {% if category and category.slug == cat.slug %}btn-dark{% else %}btn-outline-dark{% endif %}">
+                {{ cat.title }}
+            </a>
+        {% endfor %}
+    </div>
+</nav>
     <main class="container my-4">
         {% if messages %}
             <div class="row">

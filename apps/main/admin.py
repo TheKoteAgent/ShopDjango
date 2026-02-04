@@ -21,7 +21,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Lot)
-class CategoryAdmin(admin.ModelAdmin):
+class LotAdmin(admin.ModelAdmin):
     list_display = ("id", "category", "title", "desc", "price")
     list_editable = ("category", "title", "desc", "price")
     search_fields = ("id", "title")
