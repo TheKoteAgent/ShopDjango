@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block main %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5"> <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white p-3">
+                <h3 class="card-title mb-0">Sign In</h3>
+            </div>
+
+            <div class="card-body p-4">
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label fw-bold">
+                            {{ form.username.label }}
+                        </label>
+                        <input type="text"
+                               name="username"
+                               id="{{ form.username.id_for_label }}"
+                               class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+                               value="{{ form.username.value|default:'' }}"
+                               required>
+                        {% if form.username.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.username.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.password.id_for_label }}" class="form-label fw-bold">
+                            {{ form.password.label }}
+                        </label>
+                        <input type="password"
+                               name="password"
+                               id="{{ form.password.id_for_label }}"
+                               class="form-control {% if form.password.errors %}is-invalid{% endif %}"
+                               required>
+                        {% if form.password.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.password.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 mt-2">
+                        Sign In
+                    </button>
+                </form>
+            </div>
+
+            <div class="card-footer text-center py-3 bg-light">
+                <span class="text-muted">Don't have an account?</span>
+                <a href="{% url 'accounts:register' %}" class="text-decoration-none fw-bold ms-1">
+                    Register
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
