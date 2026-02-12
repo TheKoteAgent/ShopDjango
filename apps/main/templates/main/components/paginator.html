@@ -1,0 +1,50 @@
+{% if lots.has_other_pages %}
+<nav aria-label="Page navigation" class="mt-4">
+  <ul class="pagination justify-content-center">
+
+    {% if lots.has_previous %}
+      <li class="page-item">
+        <a class="page-link"
+           href="?page={{ lots.previous_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if category %}&category={{ category.id }}{% endif %}"
+           aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">&laquo;</span>
+      </li>
+    {% endif %}
+
+    {% for num in lots.paginator.page_range %}
+      {% if lots.number == num %}
+        <li class="page-item active" aria-current="page">
+          <span class="page-link">{{ num }}</span>
+        </li>
+      {% elif num > lots.number|add:'-3' and num < lots.number|add:'3' %}
+        <li class="page-item">
+          <a class="page-link"
+             href="?page={{ num }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if category %}&category={{ category.id }}{% endif %}">
+            {{ num }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if lots.has_next %}
+      <li class="page-item">
+        <a class="page-link"
+           href="?page={{ lots.next_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if category %}&category={{ category.id }}{% endif %}"
+           aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">&raquo;</span>
+      </li>
+    {% endif %}
+
+  </ul>
+</nav>
+{% endif %}

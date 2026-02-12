@@ -1,6 +1,8 @@
 from http.client import HTTPResponse
 from .models import Lot, Category
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 def lot_list(request, category_slug=None):
     categories = Category.objects.all()
@@ -11,6 +13,13 @@ def lot_list(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         lots = Lot.objects.filter(category=category)
+
+    search_query = request.GET.get('q')
+    if search_query:
+        lots = lots.filter(
+            Q(title__icontains=search_query) |
+            Q(desc__icontains=search_query)
+        )
 
     sort = request.GET.get('sort')
     if sort == 'new':
@@ -26,12 +35,22 @@ def lot_list(request, category_slug=None):
     elif sort == 'name':
         lots = lots.order_by("name")
 
+    paginator = Paginator(lots,1)
+    page = request.GET.get('page')
+
+    try:
+        lots = paginator.page(page)
+    except PageNotAnInteger:
+        lots = paginator.page(1)
+    except EmptyPage:
+        lots = paginator.page(paginator.num_pages)
 
     return render(request, "main/product_list.html", {
         "title": "Home",
         "lots": lots,
         "categories": categories,
-        "category": category
+        "category": category,
+        "search_query": search_query,
     })
 
 def lot_detail(request, id):

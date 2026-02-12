@@ -1,0 +1,29 @@
+<form method="get" action="{% if category %}{{ category.get_absolute_url }}{% else %}{% url 'main:lot_list' %}{% endif %}" class="mb-4">
+    <div class="d-flex gap-2">
+        <input
+            type="text"
+            name="q"
+            value="{{ search_query|default:'' }}"
+            placeholder="Search products..."
+            class="form-control form-control-lg"
+            aria-label="Search"
+        >
+
+        <button type="submit" class="btn btn-primary btn-lg d-flex align-items-center gap-2">
+            <i class="bi bi-search"></i> Search
+        </button>
+
+        {% if search_query %}
+            <a href="{% if category %}{{ category.get_absolute_url }}{% else %}{% url 'main:lot_list' %}{% endif %}"
+               class="btn btn-secondary btn-lg d-flex align-items-center gap-2">
+                <i class="bi bi-x-lg"></i> Discard
+            </a>
+        {% endif %}
+    </div>
+
+    {% if search_query %}
+        <p class="mt-2 text-muted">
+            Found <strong>{{ lots.paginator.count }}</strong> results by query "<strong>{{ search_query }}</strong>"
+        </p>
+    {% endif %}
+</form>
