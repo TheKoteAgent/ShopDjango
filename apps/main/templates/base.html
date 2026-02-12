@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load shop_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -72,7 +73,7 @@
                 {% for cat in categories %}
                     <a href="{{ cat.get_absolute_url }}"
                        class="btn btn-sm rounded-pill {% if category and category.slug == cat.slug %}btn-dark{% else %}btn-outline-dark{% endif %}">
-                        {{ cat.title }}
+                        {{ cat.title }}{% get_products_count category %}
                     </a>
                 {% endfor %}
             </div>
