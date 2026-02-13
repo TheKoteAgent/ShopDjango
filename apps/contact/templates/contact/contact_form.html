@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block main %}
+<div class="container py-5">
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7">
+            <div class="card shadow-lg border-0 rounded-3 overflow-hidden">
+                
+                <div class="card-header bg-primary bg-gradient text-white p-4 text-center">
+                    <h2 class="h3 mb-0 fw-bold">
+                        <i class="bi bi-envelope-fill me-2"></i> Contact Us
+                    </h2>
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+                    
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <p class="text-muted mb-4 text-center">
+                        <i class="bi bi-info-circle text-primary me-1"></i>
+                        Have questions or suggestions? Fill out the form below, and we will contact you shortly.
+                    </p>
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label fw-bold">
+                                <i class="bi bi-person me-1 text-primary"></i>
+                                {{ form.name.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.name.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label fw-bold">
+                                <i class="bi bi-envelope me-1 text-primary"></i>
+                                {{ form.email.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.email.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.subject.id_for_label }}" class="form-label fw-bold">
+                                <i class="bi bi-tag me-1 text-primary"></i>
+                                {{ form.subject.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.subject }}
+                            {% if form.subject.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.subject.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.message.id_for_label }}" class="form-label fw-bold">
+                                <i class="bi bi-chat-dots me-1 text-primary"></i>
+                                {{ form.message.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.message }}
+                            {% if form.message.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.message.errors|striptags }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text text-muted">
+                                Minimum 10 characters required.
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                                <i class="bi bi-send me-2"></i> Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+        
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm text-center py-4 hover-shadow transition-style">
+                <div class="card-body">
+                    <div class="mb-3 text-primary">
+                        <i class="bi bi-envelope-at" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Email</h5>
+                    <p class="card-text text-muted">info@example.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm text-center py-4 hover-shadow transition-style">
+                <div class="card-body">
+                    <div class="mb-3 text-primary">
+                        <i class="bi bi-telephone" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Phone</h5>
+                    <p class="card-text text-muted">+380 XX XXX XX XX</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm text-center py-4 hover-shadow transition-style">
+                <div class="card-body">
+                    <div class="mb-3 text-primary">
+                        <i class="bi bi-geo-alt" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Address</h5>
+                    <p class="card-text text-muted">Kyiv, Ukraine</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .hover-shadow {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+</style>
+{% endblock %}
