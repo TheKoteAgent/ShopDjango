@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include("apps.main.urls", namespace="main")),
     path('accounts/', include('apps.accounts.urls', namespace='accounts')),
     path('contact/', include('apps.contact.urls', namespace='contact')),
+    path('reviews/', include('apps.reviews.urls', namespace='reviews')),
 ]
 
 if settings.DEBUG:

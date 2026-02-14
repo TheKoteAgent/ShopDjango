@@ -3,6 +3,7 @@ from .models import Lot, Category
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from apps.reviews.forms import ReviewsForm
 
 def lot_list(request, category_slug=None):
     categories = Category.objects.all()
@@ -53,8 +54,12 @@ def lot_list(request, category_slug=None):
         "search_query": search_query,
     })
 
-def lot_detail(request, id):
-    lot = get_object_or_404(Lot, id=id)
+def lot_detail(request, lot_id):
+    lot = get_object_or_404(Lot, id=lot_id)
+    reviews = lot.reviews.all().order_by('-created_at')
+    review_form = ReviewsForm()
     return render(request, "main/product_detail.html", {
-        "lot": lot
+        "lot": lot,
+        'reviews': reviews,
+        'review_form': review_form,
     })
